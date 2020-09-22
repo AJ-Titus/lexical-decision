@@ -1,31 +1,59 @@
 import psychopy as psy
+import numpy as np
+
 
 class Trial:
-    def __init__(self, stimulus, condition, frequency, modality, delay=0.5, max_target_time=2):
+    @staticmethod
+    def modality_dist():
+        lf_ids = list(range(1, 51))
+        hf_ids = list(range(51, 101))
+        nw_ids = list(range(101, 201))
+
+        all_ids = [lf_ids, hf_ids, nw_ids]
+        vis = []
+        aud = []
+
+        for cnd in all_ids:
+            np.random.permutation(cnd)
+            vis_ids = cnd[0:int(len(cnd) / 2)]
+            aud_ids = cnd[int(len(cnd) / 2):]
+            vis.append(n for n in vis_ids)
+            aud.append(m for m in aud_ids)
+
+        return vis, aud
+
+    @staticmethod
+    def assign_modality(stimulus, vis, aud):
+        if stimulus.id in aud:
+            return Trial(stimulus, "auditory")
+        elif stimulus.id in vis:
+            return Trial(stimulus, "visual")
+
+    def __init__(self, stimulus, modality):
         self._stimulus = stimulus
-        self._condition = stimulus.__dict__[condition]
-        self._frequency = stimulus.__dict__[frequency]
-        self._modality = stimulus.__dict__[modality]
-        self._delay = delay
-        self._max_target_time = max_target_time
+        self._condition = stimulus.condition
+        self._frequency = stimulus.frequency
+        self.modality = modality
+        self._delay = 0.5
+        self._max_target_time = 2
 
         self.result = {
             'id': self._stimulus.id,
             'word': self._stimulus.filename,
-            'condition': condition,
-            'frequency': frequency,
+            'condition': self._condition,
+            'frequency': self._frequency,
             'modality': modality,
             'reaction_time': None,
             'response': None
         }
 
     def run_standard(self, window):
-        if self._stimulus.modality['auditory']:
+        if self.modality['auditory']:
             self._stimulus.sound.play()
             psy.core.wait(self._stimulus.sound.getDuration())
             psy.core.wait(self._delay)
 
-        elif self._stimulus.modality['visual']:
+        elif self.modality['visual']:
             self._stimulus.message.draw()
             psy.core.wait(self._delay)
             window.flip()
