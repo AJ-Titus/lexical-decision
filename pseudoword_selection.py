@@ -1,5 +1,3 @@
-# Determining overlap between words we have freq info for and words we have recordings for
-
 import os
 from os import listdir
 from os.path import isfile, join
@@ -28,12 +26,9 @@ for nonword in nonword_list[0:100]:
     copy(filename, pseudo_dir)
 
     nonword_text = str(nonword)[0:-4]
-    to_save = str(stim_id) +"," + "nw" + "," + "none" + "," + nonword_text + "," + "0\n"
+    to_save = str(stim_id) + "," + "nw" + "," + "none" + "," + nonword_text + "," + "0\n"
     outfile.write(to_save)
 
     stim_id += 1
 
 outfile.close()
-
-
-

@@ -66,11 +66,11 @@ for key, value in selected_stimuli.items():
             stim_id += 1
 
             # move the files to their correct location
-            #filename = os.path.join(sound_dir, (wrd + ".wav"))
-            #if freq > 2.406:
-             #   copy(filename, HF_dir)
-            #elif freq < 2.406:
-             #   copy(filename, LF_dir)
+            filename = os.path.join(sound_dir, (wrd + ".wav"))
+            if freq > 2.406:
+                copy(filename, HF_dir)
+            elif freq < 2.406:
+                copy(filename, LF_dir)
 
 frequency_file.close()
 outfile.close()
