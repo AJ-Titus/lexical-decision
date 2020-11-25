@@ -19,28 +19,28 @@ shuffle(trials)
 experiment.show_message("Welkom!\n\nIn dit experiment ga je naar korte fragmenten luisteren. "
                         + "Het is jouw taak om te beslissen of wat je hoort een echt woord is of niet.\n"
                         + "Druk op Z voor \'ja\' en M voor \'nee\'.\n\n"
-                        + "Het experiment duurt ongeveer 20 minuten.\n"
+                        + "Het experiment duurt ongeveer 10 minuten.\n"
                         + "Druk op een toets om te beginnen.")
 
 experiment.show_fixation(time=1.0)
 
 results = []
 trial_no = 0
-for trial in trials[0:8]:
+for trial in trials:
     trial_no += 1
     trial.run()
     results.append(trial.result)
 
     # break
-    if trial_no % 4 == 0 and trial_no != len(trials):
+    if trial_no % (len(trials)/4) == 0 and trial_no != len(trials):
         experiment.show_message("Nu kun je even pauze nemen.\n\n" +
                                 "Druk op een toets om verder te gaan.")
         experiment.show_fixation(time=0.5)
 
-experiment.show_message("Het experiment is afgelopen.\n\nBedankt voor je deelname!\n\nDruk op een toets om af te sluiten.")
-experiment.window.clearBuffer()
-psy.core.quit()
-
 # Create a dataframe based on the results, and store them to a csv file
 results = pd.DataFrame(results)
 results.to_csv('results.csv')
+
+experiment.show_message("Het experiment is afgelopen.\n\nBedankt voor je deelname!\n\nDruk op een toets om af te sluiten.")
+experiment.window.clearBuffer()
+psy.core.quit()
