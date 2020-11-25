@@ -12,7 +12,7 @@ os.chdir(dname)
 
 ###
 sound_dir = 'pseudo_underived'
-pseudo_dir = 'NW'
+pseudo_dir = 'none'
 
 nonword_list = [f for f in listdir(sound_dir) if isfile(join(sound_dir, f))]
 shuffle(nonword_list)
